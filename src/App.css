@@ -1,3 +1,11 @@
+html {
+
+}
+
+body {
+  margin: 8px;
+}
+
 header, footer {
   padding: 10px;
 }
@@ -25,4 +33,12 @@ header, footer {
   border: 1px solid gray;
   text-align: center;
   cursor: pointer;
+}
+
+#header-navigation a.nav-item{
+  margin: 0 5px;
+  color: dodgerblue;
+}
+#header-navigation a.nav-item.active{
+  color: #f50c5b;
 }

@@ -53,7 +53,7 @@ class Board extends React.Component {
 
     render() {
         return (
-            <div>
+            <div style={{flex:1,flexDirection:'column'}}>
                 <h4>Board Game #{this.props.boardNo} ({this.props.rows}x{this.props.cols})</h4>
                 <div id="board-root">
                     {this.renderBoard()}

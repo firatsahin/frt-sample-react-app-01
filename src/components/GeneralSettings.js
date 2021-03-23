@@ -15,9 +15,9 @@ class GeneralSettings extends React.Component {
 
     render() {
         return (
-            <div id="general-settings">
-                <h2>this is general settings</h2>
-                What To Do:
+            <div id="general-settings" style={{backgroundColor:'bisque'}}>
+                <h2>General Settings</h2>
+                What To Do:&nbsp;
                 <select value={this.state.settings.whatToDo} onChange={this.whatToDoChanged.bind(this)}>
                     <option>decrement</option>
                     <option>increment</option>

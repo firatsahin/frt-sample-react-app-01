@@ -1,27 +1,40 @@
 import React from 'react';
-import GeneralSettings from "./GeneralSettings";
-import Board from "./board/Board";
+import { Route, Switch } from "react-router-dom";
+import Boards from '../routes/Boards';
 
 class ContentBody extends React.Component {
     constructor(props) {
         super(props);
         this.whatToDoChanged = this.whatToDoChanged.bind(this);
         this.state = {
-            generalSettings: {whatToDo: 'increment'}
+            generalSettings: { whatToDo: 'increment', testVal: 23 },
+            boards: [
+                { rows: 6, cols: 8 },
+                { rows: 7, cols: 5 }
+            ]
         };
     }
 
     whatToDoChanged(value) {
-        this.state.generalSettings.whatToDo = value;
-        this.setState(this.state);
+        this.setState((state) => {
+            state.generalSettings.whatToDo = value;
+            return state;
+        });
     }
 
     render() {
+        //console.log("ContentBody render fired!");
         return (
             <div id="content-body">
-                <GeneralSettings settings={this.state.generalSettings} onWhatToDoChange={this.whatToDoChanged} />
-                <Board rows="6" cols="8" boardNo="1" settings={this.state.generalSettings}/>
-                <Board rows="7" cols="5" boardNo="2" settings={this.state.generalSettings}/>
+                <Switch>
+                    <Route path="/" exact>
+                        <div>home page content</div>
+                    </Route>
+                    <Route path="/boards" component={Boards} />
+                    <Route path="*">
+                        <div>404 Not Found</div>
+                    </Route>
+                </Switch>
             </div>
         );
     }
