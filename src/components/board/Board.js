@@ -26,8 +26,8 @@ class Board extends React.Component {
     cellClicked(col) {
         //console.log("cell clicked", col);
         switch (this.props.settings.whatToDo) {
-            case "increment":col.value++;break;
-            case "decrement":col.value--;break;
+            case "increment": col.value++; break;
+            case "decrement": col.value--; break;
             default: break;
         }
         this.setState(this.state); // manually triggering re-render
@@ -51,10 +51,19 @@ class Board extends React.Component {
         return rowsOfBoard;
     }
 
+    calcBoardTotal() {
+        let total = 0;
+        this.state.rowsOfBoard.forEach(row => {
+            row.cols.forEach(col => total += col.value);
+        });
+        return total;
+    }
+
     render() {
         return (
-            <div style={{flex:1,flexDirection:'column'}}>
+            <div style={{ flex: 1, flexDirection: 'column' }}>
                 <h4>Board Game #{this.props.boardNo} ({this.props.rows}x{this.props.cols})</h4>
+                <div>Board Total: {this.calcBoardTotal()}</div>
                 <div id="board-root">
                     {this.renderBoard()}
                     <div>

@@ -1,6 +1,8 @@
 import React from 'react';
 import { Route, Switch } from "react-router-dom";
+import Home from '../routes/Home';
 import Boards from '../routes/Boards';
+import NotFound from '../routes/404';
 
 class ContentBody extends React.Component {
     constructor(props) {
@@ -27,13 +29,9 @@ class ContentBody extends React.Component {
         return (
             <div id="content-body">
                 <Switch>
-                    <Route path="/" exact>
-                        <div>home page content</div>
-                    </Route>
+                    <Route path="/" exact component={() => <Home person={{ name: 'Firat' }}></Home>} />
                     <Route path="/boards" component={Boards} />
-                    <Route path="*">
-                        <div>404 Not Found</div>
-                    </Route>
+                    <Route path="*" component={NotFound} />
                 </Switch>
             </div>
         );

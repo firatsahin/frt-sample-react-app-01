@@ -1,6 +1,7 @@
 import React from 'react';
 import GeneralSettings from "../components/GeneralSettings";
 import Board from "../components/board/Board";
+import AppSettings from '../data/AppSettings';
 
 class Boards extends React.Component {
     constructor(props) {
@@ -35,6 +36,19 @@ class Boards extends React.Component {
                 </div>
             </>
         );
+    }
+
+    // component lifecycle events
+    componentDidMount() {
+        console.log("boards component did mount");
+        document.title = "Boards | " + AppSettings.seoTitle; // put pre-title
+    }
+    componentDidUpdate() {
+        console.log("boards component did update");
+    }
+    componentWillUnmount() {
+        console.log("boards component will unmount");
+        document.title = AppSettings.seoTitle; // clear pre-title
     }
 }
 

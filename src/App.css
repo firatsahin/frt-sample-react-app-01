@@ -36,7 +36,7 @@ header, footer {
 }
 
 #header-navigation a.nav-item{
-  margin: 0 5px;
+  margin: 0 6px 0 2px;
   color: dodgerblue;
 }
 #header-navigation a.nav-item.active{

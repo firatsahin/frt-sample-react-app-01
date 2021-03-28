@@ -4,7 +4,7 @@ import HeaderNav from "./HeaderNav";
 class Header extends Component {
     render() {
         return (
-            <header>
+            <header style={{ backgroundColor: '#ffe595' }}>
                 <h3 style={{ marginTop: 0 }}>{this.props.siteOwner}'s Sample React App</h3>
                 <HeaderNav navItems={this.props.navItems} />
             </header>
