@@ -1,8 +1,5 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import { Route, Switch } from "react-router-dom";
-import Home from '../routes/Home';
-import Boards from '../routes/Boards';
-import NotFound from '../routes/404';
 
 class ContentBody extends React.Component {
     constructor(props) {
@@ -26,13 +23,22 @@ class ContentBody extends React.Component {
 
     render() {
         //console.log("ContentBody render fired!");
+
+        const LazyRoutes = {
+            Home: React.lazy(() => import("../routes/Home")),
+            Boards: React.lazy(() => import("../routes/Boards")),
+            NotFound: React.lazy(() => import("../routes/404"))
+        };
+
         return (
             <div id="content-body">
-                <Switch>
-                    <Route path="/" exact component={() => <Home person={{ name: 'Firat' }}></Home>} />
-                    <Route path="/boards" component={Boards} />
-                    <Route path="*" component={NotFound} />
-                </Switch>
+                <Suspense fallback={<div>Loading...</div>}>
+                    <Switch>
+                        <Route path="/" exact component={() => <LazyRoutes.Home person={{ name: 'Firat' }}></LazyRoutes.Home>} />
+                        <Route path="/boards" component={LazyRoutes.Boards} />
+                        <Route path="*" component={LazyRoutes.NotFound} />
+                    </Switch>
+                </Suspense>
             </div>
         );
     }

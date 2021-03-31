@@ -3,7 +3,7 @@ import './App.css';
 import Header from "./components/header/Header";
 import Footer from "./components/Footer";
 import ContentBody from "./components/ContentBody";
-import { BrowserRouter as Router } from 'react-router-dom';
+import { /*BrowserRouter (for HTML5 History API routing) (needs server config too)*/ HashRouter } from 'react-router-dom';
 import AppSettings from './data/AppSettings';
 
 class App extends Component {
@@ -12,11 +12,11 @@ class App extends Component {
   }
   render() {
     return (
-      <Router>
+      <HashRouter>
         <Header siteOwner={AppSettings.siteOwner} navItems={AppSettings.navItems} />
         <ContentBody />
         <Footer footerText={AppSettings.footerText} />
-      </Router>
+      </HashRouter>
     );
   }
 }
