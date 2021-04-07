@@ -1,4 +1,5 @@
 import React from 'react';
+import UserWelcome from "./UserWelcome";
 
 class Footer extends React.Component {
     constructor(props) {
@@ -12,7 +13,15 @@ class Footer extends React.Component {
     }
 
     render() {
-        return <footer style={this.styles.footerRoot}>{this.ftText}</footer>;
+        return (
+            <footer style={this.styles.footerRoot}>
+                <div style={{ float: 'left' }}>{this.ftText}</div>
+                <div style={{ float: 'right' }}>
+                    <UserWelcome></UserWelcome>
+                </div>
+                <div style={{ clear: 'both' }}></div>
+            </footer>
+        );
     }
 }
 

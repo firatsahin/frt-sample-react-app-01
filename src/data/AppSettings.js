@@ -6,7 +6,8 @@ const AppSettings = {
         { text: 'Home', toLink: '/' },
         { text: 'Boards', toLink: '/boards' },
         { text: 'Other Page', toLink: '/other' },
-        { text: 'Another Page', toLink: '/another' }
+        { text: 'Another Page', toLink: '/another' },
+        { text: 'Functional Component', toLink: '/function-component' },
     ]
 };
 

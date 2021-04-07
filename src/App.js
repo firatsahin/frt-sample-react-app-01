@@ -13,7 +13,7 @@ class App extends Component {
   render() {
     return (
       <HashRouter>
-        <Header siteOwner={AppSettings.siteOwner} navItems={AppSettings.navItems} />
+        <Header siteOwner={AppSettings.siteOwner} />
         <ContentBody />
         <Footer footerText={AppSettings.footerText} />
       </HashRouter>

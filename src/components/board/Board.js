@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 class Board extends React.Component {
     constructor(props) {
@@ -74,5 +75,11 @@ class Board extends React.Component {
         );
     }
 }
+
+Board.propTypes = {
+    rows: PropTypes.number.isRequired,
+    cols: PropTypes.number.isRequired,
+    settings: PropTypes.object.isRequired
+};
 
 export default Board;

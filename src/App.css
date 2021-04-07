@@ -13,6 +13,7 @@ header, footer {
 #content-body {
   padding: 20px;
   background-color: aliceblue;
+  min-height: 500px;
 }
 
 .board-row {
