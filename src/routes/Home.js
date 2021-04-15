@@ -1,21 +1,6 @@
 import React from 'react';
 import AppSettings from '../data/AppSettings';
 
-// React component > function usage
-/*const Home = () => {
-    const [name, setName] = useState('firat');
-    const [age, setAge] = useState(23);
-
-    const incAge = inc => setAge(age + inc);
-
-    return (
-        <>
-            Home Page for {name} who is {age} years old.
-            <button onClick={() => incAge(2)}>age+1</button>
-        </>
-    );
-};*/
-
 // React component > class usage
 class Home extends React.Component {
     constructor(props) {

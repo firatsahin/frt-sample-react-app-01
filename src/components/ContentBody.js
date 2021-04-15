@@ -28,6 +28,7 @@ class ContentBody extends React.Component {
             Home: React.lazy(() => import("../routes/Home")),
             Boards: React.lazy(() => import("../routes/Boards")),
             FunctionComponent: React.lazy(() => import("../routes/FunctionComponent")),
+            MyAlgoTrader: React.lazy(() => import("../routes/MyAlgoTrader")),
             NotFound: React.lazy(() => import("../routes/404"))
         };
 
@@ -38,6 +39,8 @@ class ContentBody extends React.Component {
                         <Route path="/" exact component={() => <LazyRoutes.Home person={{ name: 'Firat' }}></LazyRoutes.Home>} />
                         <Route path="/boards" component={LazyRoutes.Boards} />
                         <Route path="/function-component" component={() => <LazyRoutes.FunctionComponent propVal={"prop value 1"} />} />
+                        <Route path="/my-algo-trader" component={LazyRoutes.MyAlgoTrader} />
+                        <Route path="/my-algo-trader-backtest" component={() => <LazyRoutes.MyAlgoTrader backTesting={true} />} />
                         <Route path="*" component={LazyRoutes.NotFound} />
                     </Switch>
                 </Suspense>
