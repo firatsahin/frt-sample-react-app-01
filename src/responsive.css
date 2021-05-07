@@ -1,0 +1,24 @@
+/* laptop */
+@media screen and (max-width: 1024px) {
+    div.myCoinsTableWrapper1{
+        width: 100%;
+    }
+    div.myCoinsTableWrapper2{
+        width: 100%;
+    }
+}
+
+/* tablet */
+@media screen and (max-width: 768px) {
+    div#coin-list-wrapper > div:nth-child(1){
+        margin: unset !important;
+    }
+    div#coin-list-wrapper > div:nth-child(2){
+        width: 100% !important;
+    }
+}
+
+/* mobile */
+@media screen and (max-width: 425px) {
+
+}

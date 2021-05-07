@@ -14,6 +14,7 @@ class MyAlgoTrader extends Component {
             buySellColType: 'auto',
             autoBuySellCheckFreq: 10, // in seconds
             autoBuySellMakeSureTimes: 3, // after N checks, if desired margin stays still > do the trade
+            priceHistoryMaxLength: 14, // to calculate RSI (for N diffs, we need N+1 price history)
             coins: [], // symbol list (which can be traded with USDT)
             coinsModalOpen: false,
             myCoins: []
@@ -55,9 +56,9 @@ class MyAlgoTrader extends Component {
             isActive: false, // true: we are in | false: we are out
             autoBuySell: false, // auto buy/sell feature active or not (for that coin)
             backTestRan: false,
-            //buySellSurenessLevels: [5, 10, 15], // for margin %4 -> 4.2 | 4.4 | 4.6
-            //surenessLevel: 0,
             initialPrice: null,
+            priceHistory: [],
+            RSI: 50, // initial value
             buyCount: 0,
             initialBudgetInBaseCoin: Math.floor((this.state.baseCoinBalance - (this.state.baseCoinBalance * this.state.commissionRate)) / this.interestedCoins.length),
             upperMarginTarget: 4,
@@ -107,6 +108,9 @@ class MyAlgoTrader extends Component {
     priceNMarginUpdates(myCoin, priceStr) {
         myCoin.price = parseFloat(priceStr);
         if (!myCoin.initialPrice) myCoin.initialPrice = myCoin.price;
+        myCoin.priceHistory.push(myCoin.price);
+        if (myCoin.priceHistory.length > this.state.priceHistoryMaxLength) myCoin.priceHistory.shift();
+        this.calculateRSI(myCoin);
         if (myCoin.isActive) { // I'm in > tracking the max
             if (myCoin.price > myCoin.maxPriceSinceLastBuy) myCoin.maxPriceSinceLastBuy = myCoin.price;
             myCoin.lowerMargin = (myCoin.price / myCoin.maxPriceSinceLastBuy * 100) - 100;
@@ -121,6 +125,9 @@ class MyAlgoTrader extends Component {
     priceNMarginUpdatesWithKline(myCoin, kline) {
         myCoin.price = parseFloat(kline[4]); // the price at the end of kline
         if (!myCoin.initialPrice) myCoin.initialPrice = myCoin.price;
+        myCoin.priceHistory.push(myCoin.price);
+        if (myCoin.priceHistory.length > this.state.priceHistoryMaxLength) myCoin.priceHistory.shift();
+        this.calculateRSI(myCoin);
         if (myCoin.isActive) { // I'm in > tracking the max
             const klineMax = parseFloat(kline[2]);
             if (klineMax > myCoin.maxPriceSinceLastBuy) myCoin.maxPriceSinceLastBuy = klineMax;
@@ -131,6 +138,16 @@ class MyAlgoTrader extends Component {
             if (klineMin < myCoin.minPriceSinceLastSell) myCoin.minPriceSinceLastSell = klineMin;
             myCoin.upperMargin = (myCoin.price / myCoin.minPriceSinceLastSell * 100) - 100;
         }
+    }
+
+    calculateRSI(myCoin) {
+        if (myCoin.priceHistory.length < this.state.priceHistoryMaxLength) return; // we don't have enough data yet (to calculate RSI)
+        let ups = 0, downs = 0;
+        for (let i = 0; i < myCoin.priceHistory.length - 1; i++) {
+            const diff = myCoin.priceHistory[i + 1] - myCoin.priceHistory[i];
+            if (diff > 0) ups += diff; else downs += Math.abs(diff);
+        }
+        myCoin.RSI = 100 - (100 / (1 + (ups / downs))); // RSI formula
     }
 
     backTestStrategyFor(myCoin) {
@@ -177,28 +194,38 @@ class MyAlgoTrader extends Component {
     surenessCheck(myCoin, side) {
         let areWeSureEnough = false;
         if (side === 'BUY') {
-            areWeSureEnough = true;// TEMP!!
+            areWeSureEnough = true;
         }
         if (side === 'SELL') {
-            areWeSureEnough = true;// TEMP!!
+            areWeSureEnough = true;
         }
         return areWeSureEnough;
     }
 
     autoBuySellCheck(myCoin) {
         if (!myCoin.autoBuySell) return;
-        if (myCoin.isActive) { // I'm in > tracking the max
-            if (myCoin.lowerMargin < myCoin.lowerMarginTarget) { // we've reached the target margin
-                const areWeSureEnough = this.surenessCheck(myCoin, 'SELL'); // sureness check
-                if (areWeSureEnough) this.sell(myCoin); // we're sure enough (we were over the margin N times) > so sell
-            }
-            else myCoin.surenessLevel = 0; // we're below the target margin, reset the "sureness"
-        } else { // I'm out > tracking the min
-            if (myCoin.upperMargin > myCoin.upperMarginTarget) { // we've reached the target margin
+        const RSISays = (myCoin.RSI < 30 ? 'buy' : (myCoin.RSI > 70 ? 'sell' : ''));
+        if (!myCoin.isActive) { // I'm out > tracking the min
+            if (myCoin.upperMargin > (myCoin.upperMarginTarget * (RSISays === 'buy' ? .7 : (RSISays === 'sell' ? 1.3 : 1)))) { // we've reached the target margin
                 const areWeSureEnough = this.surenessCheck(myCoin, 'BUY'); // sureness check
-                if (areWeSureEnough) this.buy(myCoin); // we're sure enough (we were over the margin N times) > so buy
+                if (areWeSureEnough) this.buy(myCoin); // we're sure enough > so buy
             }
-            else myCoin.surenessLevel = 0; // we're below the target margin, reset the "sureness"
+        }
+        else { // I'm in > tracking the max
+            if (myCoin.lowerMargin < (myCoin.lowerMarginTarget * (RSISays === 'sell' ? .7 : (RSISays === 'buy' ? 1.3 : 1)))) { // we've reached the target margin
+                const areWeSureEnough = this.surenessCheck(myCoin, 'SELL'); // sureness check
+                if (areWeSureEnough) this.sell(myCoin); // we're sure enough > so sell
+            }
+        }
+    }
+
+    autoBuySellCheckRSIBased(myCoin) {
+        if (!myCoin.autoBuySell) return;
+        if (!myCoin.isActive) { // I'm out > tracking the min
+            if (myCoin.RSI < 30) this.buy(myCoin); // RSI says 'buy'
+        }
+        else { // I'm in > tracking the max
+            if (myCoin.RSI > 70) this.sell(myCoin); // RSI says 'sell'
         }
     }
 
@@ -273,13 +300,23 @@ class MyAlgoTrader extends Component {
                                 })()}
                             </select>
                         </div>
+                        <div style={{ display: (!this.state.backTesting ? 'inline-block' : 'none'), marginRight: 25 }}>
+                            <b>Auto Buy/Sell Check:</b> each
+                            <input type="number" style={{ width: 40 }} value={this.state.autoBuySellCheckFreq} min={1} onChange={(e) => this.setState({ ...this.state, autoBuySellCheckFreq: parseInt(e.target.value) })} />sec(s)
+                            {(() => {
+                                let totalSec = this.state.autoBuySellCheckFreq, s = 0, m = 0;
+                                s = totalSec % 60; totalSec -= s;
+                                m = totalSec / 60;
+                                return <span style={{ marginLeft: 8, fontSize: 12, color: 'blue' }}>({(m > 0 ? m + 'm ' : '') + s + 's'})</span>
+                            })()}
+                        </div>
                         <button onClick={() => this.setState({ ...this.state, coinsModalOpen: true })}>Browse Coins</button>
                     </div>
                     <div style={{ clear: 'both' }}></div>
                 </div>
                 <div style={{ overflow: 'hidden' }}>
                     {[true, false].map((isActiveTable) => (
-                        <div style={{ float: 'left', width: (isActiveTable ? '44' : '56') + '%' }} key={isActiveTable}>
+                        <div className={'myCoinsTableWrapper' + (isActiveTable ? '1' : '2')} key={isActiveTable}>
                             {isActiveTable ? (
                                 <h4 style={{ color: 'green' }}>Active Coins (we are IN)</h4>
                             ) : (
@@ -298,6 +335,7 @@ class MyAlgoTrader extends Component {
                                         <th hidden={isActiveTable}>Sell Price</th>
                                         <th hidden={isActiveTable}>Min Price</th>
                                         <th hidden={isActiveTable}>Upper<br />Margin</th>
+                                        <th>RSI-{this.state.priceHistoryMaxLength}</th>
                                         <th>Buy/Sell&nbsp;&nbsp;
                                             <select value={this.state.buySellColType} onChange={(e) => { this.setState({ ...this.state, buySellColType: e.target.value }); }}>
                                                 <option value="auto">Auto</option>
@@ -357,6 +395,7 @@ class MyAlgoTrader extends Component {
                                                         <div style={{ position: 'absolute', width: (myCoin.upperMargin / myCoin.upperMarginTarget * 100) + '%', height: 10, backgroundColor: 'green' }}></div>
                                                     </div>
                                                 </td>
+                                                <td style={{ color: myCoin.RSI > 70 ? 'red' : (myCoin.RSI < 30 ? 'green' : '') }}>{myCoin.RSI.toFixed(2)} {myCoin.RSI > 70 ? '(Sell)' : (myCoin.RSI < 30 ? '(Buy)' : '')}</td>
                                                 <td>
                                                     {this.state.buySellColType === 'auto' ? (
                                                         <>

@@ -51,6 +51,16 @@ footer{
   color: #f50c5b;
 }
 
+div.myCoinsTableWrapper1{
+  float: left;
+  width: 44%;
+  overflow-y: auto;
+}
+div.myCoinsTableWrapper2{
+  float: left;
+  width: 56%;
+  overflow-y: auto;
+}
 table.myCoinsTable{
   margin-top: 20px;
   border-collapse: collapse;
