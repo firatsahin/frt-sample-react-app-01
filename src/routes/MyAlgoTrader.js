@@ -1,6 +1,8 @@
 import React, { Component, Suspense } from 'react';
 import AppSettings from '../data/AppSettings';
 
+import '../css/MyAlgoTrader.css';
+
 const BrowseCoinsModal = React.lazy(() => import("../components/myAlgoTrader/BrowseCoinsModal"));
 
 class MyAlgoTrader extends Component {

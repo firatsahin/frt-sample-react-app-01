@@ -5,6 +5,7 @@ html {
 body {
   /*margin: 8px;*/
   background-color: aliceblue;
+  font-size: 15px;
 }
 
 header, footer {
@@ -21,69 +22,4 @@ footer{
 #content-body {
   padding: 10px 10px 53px 10px;
   min-height: 500px;
-}
-
-.board-row {
-
-}
-
-.board-row:after {
-  content: '';
-  clear: both;
-  display: table;
-}
-
-.board-row .board-col {
-  float: left;
-  width: 20px;
-  height: 20px;
-  padding: 10px;
-  border: 1px solid gray;
-  text-align: center;
-  cursor: pointer;
-}
-
-#header-navigation a.nav-item{
-  margin: 0 6px 0 2px;
-  color: dodgerblue;
-}
-#header-navigation a.nav-item.active{
-  color: #f50c5b;
-}
-
-div.myCoinsTableWrapper1{
-  float: left;
-  width: 44%;
-  overflow-y: auto;
-}
-div.myCoinsTableWrapper2{
-  float: left;
-  width: 56%;
-  overflow-y: auto;
-}
-table.myCoinsTable{
-  margin-top: 20px;
-  border-collapse: collapse;
-}
-table.myCoinsTable tr{
-
-}
-table.myCoinsTable tr.iam-in{
-background-color: greenyellow;
-}
-table.myCoinsTable tr.iam-watching{
-  background-color: orange;
-  }
-table.myCoinsTable tr th,table.myCoinsTable tr td{
-  border:1px dashed gray;
-  padding: 6px;
-}
-#coin-list-wrapper{
-  position: fixed;
-  width: 100%;
-  height: 100%;
-  top: 0;
-  left: 0;
-  background-color: rgba(0,0,0,.7);
-  z-index: 1;
 }

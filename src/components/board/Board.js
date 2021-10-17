@@ -1,6 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+//import './Board.css'; // Import regular stylesheet
+import styles from './Board.module.css'; // Import css modules stylesheet as styles
+
 class Board extends React.Component {
     constructor(props) {
         super(props);
@@ -36,7 +39,7 @@ class Board extends React.Component {
 
     renderColsOfRow(row) {
         const rowsOfBoard = row.cols.map((col) =>
-            <div className="board-col" key={col.colIndex} onClick={this.cellClicked.bind(this, col)}>
+            <div className={styles["board-col"]} key={col.colIndex} onClick={this.cellClicked.bind(this, col)}>
                 {col.value}
             </div>
         );
@@ -45,7 +48,7 @@ class Board extends React.Component {
 
     renderBoard() {
         const rowsOfBoard = this.state.rowsOfBoard.map((row) =>
-            <div className="board-row" key={row.rowIndex}>
+            <div className={styles["board-row"]} key={row.rowIndex}>
                 {this.renderColsOfRow(row)}
             </div>
         );

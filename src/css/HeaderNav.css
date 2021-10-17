@@ -1,0 +1,11 @@
+#header-navigation a.nav-item{
+    /*margin: 0 6px 0 2px;*/
+    color: dodgerblue;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+#header-navigation a.nav-item.active{
+    color: #f50c5b;
+    background-color:aliceblue;
+}

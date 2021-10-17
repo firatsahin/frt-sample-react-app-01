@@ -1,0 +1,19 @@
+.board-row {
+
+}
+
+.board-row:after {
+  content: '';
+  clear: both;
+  display: table;
+}
+
+.board-row .board-col {
+  float: left;
+  width: 20px;
+  height: 20px;
+  padding: 10px;
+  border: 1px solid gray;
+  text-align: center;
+  cursor: pointer;
+}

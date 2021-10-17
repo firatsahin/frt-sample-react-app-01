@@ -5,11 +5,11 @@ const AppSettings = {
     navItems: [
         { text: 'Home', toLink: '/' },
         { text: 'Boards', toLink: '/boards' },
-        { text: 'Other Page', toLink: '/other' },
-        { text: 'Another Page', toLink: '/another' },
-        { text: 'Functional Component', toLink: '/function-component' },
+        { text: 'Missing Page', toLink: '/missing-page' },
+        { text: 'Func. Comp. (JS)', toLink: '/function-component' },
         { text: 'My Algo Trader', toLink: '/my-algo-trader' },
-        { text: 'My Algo Trader (Back-Test)', toLink: '/my-algo-trader-backtest' },
+        { text: 'M.A.T. (Back-Test)', toLink: '/my-algo-trader-backtest' },
+        { text: 'Func. Comp. (TS)', toLink: '/function-component-with-ts' },
     ]
 };
 

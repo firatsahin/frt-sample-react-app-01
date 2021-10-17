@@ -2,6 +2,8 @@ import React from 'react';
 import HeaderNavItem from './HeaderNavItem';
 import { ADD_NEW, REMOVE_LAST } from "../../redux/topNavMenu/topNavMenu.actions";
 
+import '../../css/HeaderNav.css';
+
 import { connect } from "react-redux";
 
 class HeaderNav extends React.Component {
@@ -14,13 +16,14 @@ class HeaderNav extends React.Component {
                     );
                 })}
                 {this.props.navItems.length < this.props.maxNavItems ? ( // add button
-                    <button onClick={() => this.props.addNew('New Menu Text')} style={{ marginLeft: 5 }}>+ Add New</button>
+                    <button onClick={() => this.props.addNew('NEW')} style={{ marginLeft: 5 }}>+</button>
                 ) : null}
                 {this.props.navItems.length > 0 ? ( // remove button
-                    <button onClick={this.props.removeLast} style={{ marginLeft: 10 }}>- Remove Last</button>
+                    <button onClick={this.props.removeLast} style={{ marginLeft: 10 }}>-</button>
                 ) : null}
                 <span style={{ marginLeft: 8 }}>({this.props.navItems.length} {this.props.attrProp}{this.props.navItems.length !== 1 ? 's' : ''})</span>
-            </div>);
+            </div>
+        );
     }
 }
 

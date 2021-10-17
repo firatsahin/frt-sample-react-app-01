@@ -2,7 +2,7 @@ import AppSettings from "../../data/AppSettings";
 import { ADD_NEW, REMOVE_LAST, LOG_ME_IN } from "./topNavMenu.actions";
 
 const INITIAL_STATE = {
-    maxItemsAllowed: 8,
+    maxItemsAllowed: 10,
     items: AppSettings.navItems
 };
 
