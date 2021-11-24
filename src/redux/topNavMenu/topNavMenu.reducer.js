@@ -10,7 +10,7 @@ const reducer = (state = INITIAL_STATE, action) => {
     console.log("topNav reducer here!", state, action);
     switch (action.type) {
         case ADD_NEW:
-            return { ...state, items: [...state.items, { text: action.payload.newMenuText || 'Redux Added', toLink: '/redux-added' }] };
+            return { ...state, items: [...state.items, { text: action.payload.newMenuText || 'Redux Added', toLink: action.payload.newToLink || '/redux-added' }] };
         case REMOVE_LAST:
             state.items.pop(); // remove last one
             return { ...state, items: [...state.items] };

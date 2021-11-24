@@ -1,5 +1,5 @@
 import React from 'react';
-import AppSettings from '../data/AppSettings';
+import { setTitle } from '../utility/common';
 
 // React component > class usage
 class Home extends React.Component {
@@ -51,7 +51,7 @@ class Home extends React.Component {
     wscEvent = this.windowSizeChanged.bind(this);
     componentDidMount() {
         console.log("home component did mount");
-        document.title = AppSettings.seoTitle;
+        setTitle(null);
 
         this.windowSizeChanged();
         window.addEventListener("resize", this.wscEvent); // add window.resize event after mounting

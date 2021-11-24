@@ -39,5 +39,8 @@
       "last 1 safari version"
     ]
   },
-  "homepage": "/frt-sample-react-app-01"
+  "homepage": "/frt-sample-react-app-01",
+  "devDependencies": {
+    "@types/react-router-dom": "^5.3.1"
+  }
 }

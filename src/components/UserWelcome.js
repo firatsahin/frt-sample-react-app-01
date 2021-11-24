@@ -23,9 +23,9 @@ class UserWelcome extends Component {
                         <>
                             <span>Welcome, <b>{!this.props.userAuth.isAuthenticated ? 'Guest' : this.props.userAuth.userName}</b>! </span>
                             {!this.props.userAuth.isAuthenticated ? (
-                                <NavLink to="#" onClick={this.makeRequest.bind(this)}>Login</NavLink>
+                                <NavLink to="#" onClick={this.makeRequest.bind(this)} style={{ color: 'dodgerblue' }}>Login</NavLink>
                             ) : (
-                                <NavLink to="#" onClick={this.props.logMeOut}>Logout</NavLink>
+                                <NavLink to="#" onClick={this.props.logMeOut} style={{ color: 'dodgerblue' }}>Logout</NavLink>
                             )}
                         </>
                     ) : (

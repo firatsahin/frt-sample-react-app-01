@@ -1,7 +1,7 @@
 import React, { Component, Suspense } from 'react';
-import AppSettings from '../data/AppSettings';
 
 import '../css/MyAlgoTrader.css';
+import { setTitle } from '../utility/common';
 
 const BrowseCoinsModal = React.lazy(() => import("../components/myAlgoTrader/BrowseCoinsModal"));
 
@@ -450,7 +450,7 @@ class MyAlgoTrader extends Component {
     // component lifecycle events
     componentDidMount() {
         console.log("component did mount");
-        document.title = "My Algo Trader | " + AppSettings.seoTitle;
+        setTitle("My Algo Trader");
 
         this.interestedCoins.forEach((coin) => this.addCoinToMyCoins(coin));
         this.initListeners();
@@ -460,6 +460,7 @@ class MyAlgoTrader extends Component {
     }
     componentWillUnmount() {
         console.log("component will unmount");
+        setTitle(null);
 
         // close web socket connection (if exists)
         if (this.binanceWsConnection) this.binanceWsConnection.close();

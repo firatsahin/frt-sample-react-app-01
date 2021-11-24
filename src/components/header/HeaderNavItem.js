@@ -7,6 +7,8 @@ class HeaderNavItem extends React.Component {
             <NavLink to={this.props.navItem.toLink} isActive={(match, location) => {
                 if (match && match.isExact) return true; // exact match case
                 // if there is no exact match > additional rules can be added below
+                //console.log(this.props.navItem, location);
+                if (location.pathname.startsWith('/todo/') && this.props.navItem.toLink === '/todos') return true;
                 return (location.pathname === this.props.navItem.toLink);
             }} className="nav-item" activeClassName="active">{this.props.navItem.text}</NavLink>
         );

@@ -10,6 +10,7 @@ const AppSettings = {
         { text: 'My Algo Trader', toLink: '/my-algo-trader' },
         { text: 'M.A.T. (Back-Test)', toLink: '/my-algo-trader-backtest' },
         { text: 'Func. Comp. (TS)', toLink: '/function-component-with-ts' },
+        { text: 'Todos', toLink: '/todos' },
     ]
 };
 

@@ -30,6 +30,7 @@ class ContentBody extends React.Component {
             FunctionComponent: React.lazy(() => import("../routes/FunctionComponent")),
             MyAlgoTrader: React.lazy(() => import("../routes/MyAlgoTrader")),
             FunctionComponentTS: React.lazy(() => import("../routes/FunctionComponentTs")),
+            Todos: React.lazy(() => import("../routes/Todos")),
             NotFound: React.lazy(() => import("../routes/404"))
         };
 
@@ -43,6 +44,8 @@ class ContentBody extends React.Component {
                         <Route path="/my-algo-trader" component={LazyRoutes.MyAlgoTrader} />
                         <Route path="/my-algo-trader-backtest" component={() => <LazyRoutes.MyAlgoTrader backTesting={true} />} />
                         <Route path="/function-component-with-ts" component={() => <LazyRoutes.FunctionComponentTS />} />
+                        <Route path="/todos" component={() => <LazyRoutes.Todos />} />
+                        <Route path="/todo/:id" component={() => <LazyRoutes.Todos />} />
                         <Route path="*" component={LazyRoutes.NotFound} />
                     </Switch>
                 </Suspense>

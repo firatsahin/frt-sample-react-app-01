@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react';
-import AppSettings from '../data/AppSettings';
 import AsideTs from '../components/AsideTs';
 import Post from '../components/hocExamples/Post';
 import Comment from '../components/hocExamples/Comment';
 import withCounter from '../components/hocExamples/WithCounter';
+import { setTitle } from '../utility/common';
 
 // type / interface usage (pretty much the same)
 type FunctionComponentTsProps = {
@@ -16,10 +16,10 @@ type FunctionComponentTsProps = {
 const FunctionComponentTs: React.FC<FunctionComponentTsProps> = () => {
   useEffect(() => { // effect 1
     console.log("useEffect() 1 set");
-    document.title = "Functional Component (with TS) | " + AppSettings.seoTitle; // put pre-title
+    setTitle("Functional Component (with TS)");
     return () => {
       console.log("useEffect() 1 unset");
-      document.title = AppSettings.seoTitle; // clear pre-title
+      setTitle(null);
     }
   });
 

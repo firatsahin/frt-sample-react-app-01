@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import AppSettings from '../data/AppSettings';
 import PropTypes from 'prop-types';
 import { REMOVE_LAST } from "../redux/topNavMenu/topNavMenu.actions";
 
 import { useSelector, useDispatch } from "react-redux";
+import { setTitle } from '../utility/common';
 
 const FunctionComponent = (props) => {
     const [myBool, setMyBool] = useState(false);
@@ -15,10 +15,10 @@ const FunctionComponent = (props) => {
 
     useEffect(() => { // effect 1
         console.log("useEffect() 1 set");
-        document.title = "Functional Component | " + AppSettings.seoTitle; // put pre-title
+        setTitle("Functional Component");
         return () => {
             console.log("useEffect() 1 unset");
-            document.title = AppSettings.seoTitle; // clear pre-title
+            setTitle(null);
         }
     });
 

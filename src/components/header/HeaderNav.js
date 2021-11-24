@@ -16,7 +16,7 @@ class HeaderNav extends React.Component {
                     );
                 })}
                 {this.props.navItems.length < this.props.maxNavItems ? ( // add button
-                    <button onClick={() => this.props.addNew('NEW')} style={{ marginLeft: 5 }}>+</button>
+                    <button onClick={() => this.props.addNew('NEW', '/new')} style={{ marginLeft: 5 }}>+</button>
                 ) : null}
                 {this.props.navItems.length > 0 ? ( // remove button
                     <button onClick={this.props.removeLast} style={{ marginLeft: 10 }}>-</button>
@@ -34,7 +34,7 @@ export default connect(state => { // map state to props
     };
 }, dispatch => { // map dispatch to props
     return {
-        addNew: (text) => dispatch({ type: ADD_NEW, payload: { newMenuText: text } }),
+        addNew: (text, toLink) => dispatch({ type: ADD_NEW, payload: { newMenuText: text, newToLink: toLink } }),
         removeLast: () => dispatch({ type: REMOVE_LAST })
     };
 })(HeaderNav);
